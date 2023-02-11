@@ -14,6 +14,7 @@
     "com.unity.xr.arkit": "5.1.0-pre.2",
     "com.unity.xr.interaction.toolkit": "2.1.1",
     "com.unity.xr.openxr": "1.5.1",
+    "nl.elraccoone.tweens": "https://github.com/jeffreylanters/unity-tweens.git",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
