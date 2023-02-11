@@ -42,8 +42,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7839503351229018537}
   - component: {fileID: 1093041795592272222}
-  - component: {fileID: -7596424143765655572}
-  - component: {fileID: -1811512821866821602}
+  - component: {fileID: 4326310222010476262}
+  - component: {fileID: 8597236062643245687}
   m_Layer: 0
   m_Name: Slingshot
   m_TagString: Untagged
@@ -89,7 +89,7 @@ MonoBehaviour:
   reticleRenderer: {fileID: 7722424675762289509}
   slingshotLocalYOffsetMultiplier: -0.13
   distAheadOffset: 0.5
---- !u!114 &-7596424143765655572
+--- !u!114 &4326310222010476262
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,7 +111,7 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-1811512821866821602
+--- !u!114 &8597236062643245687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

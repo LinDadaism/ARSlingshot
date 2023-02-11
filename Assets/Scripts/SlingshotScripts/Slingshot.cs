@@ -1,4 +1,4 @@
-
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
 using ElRaccoone.Tweens;
@@ -104,7 +104,8 @@ public class Slingshot : MonoBehaviour
     /// </returns>
     /// <param name="origTransform">The original transform of the Pellet we are duplicating
     static PelletShot CreatePelletShot(Transform origTransform) {
-        Transform pelletWorldTransform = Instantiate(origTransform, origTransform.position, origTransform.rotation, origTransform.parent);
+        //Transform pelletWorldTransform = Instantiate(origTransform, origTransform.position, origTransform.rotation, origTransform.parent);
+        Transform pelletWorldTransform = PhotonNetwork.Instantiate("Pellet", origTransform.position, origTransform.rotation).transform;
         pelletWorldTransform.localScale = origTransform.localScale;
         pelletWorldTransform.parent = null;
         pelletWorldTransform.name = "WORLD PELLET";

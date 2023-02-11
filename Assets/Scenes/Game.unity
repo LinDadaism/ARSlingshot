@@ -1329,7 +1329,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 20
+  far clip plane: 1000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2263,6 +2263,26 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 715633766}
     m_Modifications:
+    - target: {fileID: -7596424143765655572, guid: 12c9d3ce3701cb24d9f83cf2b98e8fd7,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7596424143765655572, guid: 12c9d3ce3701cb24d9f83cf2b98e8fd7,
+        type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093041795592272222, guid: 12c9d3ce3701cb24d9f83cf2b98e8fd7,
+        type: 3}
+      propertyPath: distAheadOffset
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093041795592272222, guid: 12c9d3ce3701cb24d9f83cf2b98e8fd7,
+        type: 3}
+      propertyPath: slingshotLocalYOffsetMultiplier
+      value: -0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3711233180052876905, guid: 12c9d3ce3701cb24d9f83cf2b98e8fd7,
         type: 3}
       propertyPath: m_Name
@@ -2286,7 +2306,7 @@ PrefabInstance:
     - target: {fileID: 7839503351229018537, guid: 12c9d3ce3701cb24d9f83cf2b98e8fd7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.136
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7839503351229018537, guid: 12c9d3ce3701cb24d9f83cf2b98e8fd7,
         type: 3}
