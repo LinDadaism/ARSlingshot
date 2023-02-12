@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Hoop.prefab.meta
 guid: 8c0cc474b250a6a449f6855e8f82fd7b
 PrefabImporter:
+========
+guid: 4103bb815623e4e4f99a167469d8362c
+NativeFormatImporter:
+>>>>>>>> db6c4b42a5b6c646e2d806b289f07f59700243c1:Assets/XR/Resources/XRSimulationRuntimeSettings.asset.meta
   externalObjects: {}
+  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
