@@ -1,4 +1,4 @@
-namespace MyFirstARGame
+namespace ARSlingshot
 {
     using UnityEngine;
     using UnityEngine.XR.Interaction.Toolkit.AR;

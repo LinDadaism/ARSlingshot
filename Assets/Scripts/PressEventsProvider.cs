@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MyFirstARGame
+namespace ARSlingshot
 {
     /// <summary>
     /// Provides events for user input based on <see cref="PressInputBase"/>.

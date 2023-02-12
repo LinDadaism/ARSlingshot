@@ -1,4 +1,4 @@
-namespace MyFirstARGame
+namespace ARSlingshot
 {
     using System.Collections.Generic;
     using System.Linq;

@@ -6,7 +6,7 @@ using UnityEngine.XR.ARSubsystems;
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     [RequireComponent(typeof(ARRaycastManager))]
-    public class PlaceMultipleObjectsOnPlane : MyFirstARGame.PressInputBase
+    public class PlaceMultipleObjectsOnPlane : ARSlingshot.PressInputBase
     {
         [SerializeField]
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]

@@ -1,4 +1,4 @@
-namespace MyFirstARGame
+namespace ARSlingshot
 {
     using Photon.Pun;
     using UnityEngine;

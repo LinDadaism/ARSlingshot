@@ -1,6 +1,7 @@
-namespace MyFirstARGame
+namespace ARSlingshot
 {
     using UnityEngine;
+    using UnityEngine.EventSystems;
     using UnityEngine.InputSystem;
 
     /// <summary>
@@ -31,6 +32,13 @@ namespace MyFirstARGame
             };
 
             m_PressAction.canceled += _ => OnPressCancel();
+            m_PressAction.canceled += _ =>
+            {
+                if (_.control.device is Pointer device)
+                {
+                    OnPressCancel(device.position.ReadValue());
+                }
+            };
         }
 
         protected virtual void OnEnable()
@@ -52,6 +60,9 @@ namespace MyFirstARGame
 
         protected virtual void OnPressBegan(Vector3 position) {}
 
-        protected virtual void OnPressCancel() {}
+        protected virtual void OnPressCancel(Vector3 position) {}
+
+        protected virtual void OnPressCancel() { }
+
     }
 }
