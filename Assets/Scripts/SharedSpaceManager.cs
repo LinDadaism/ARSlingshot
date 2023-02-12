@@ -35,6 +35,8 @@ namespace MyFirstARGame
         private GameObject arCamera;
         private bool syncNextTick;
 
+        private GameObject targetHoop;
+
         private void Awake()
         {
             // Image tracking needs a mobile device to work.
@@ -105,6 +107,7 @@ namespace MyFirstARGame
                         if (this.syncNextTick)
                         {
                             this.ShowOutline(true, false);
+                            this.SpawnHoopAtTrackedImg(trackedImg.gameObject);
                             this.MatchReferenceCoordinateSystem(trackedImg.gameObject);
                             this.hasFoundOrigin = true;
                             this.syncNextTick = false;
@@ -125,6 +128,14 @@ namespace MyFirstARGame
             // The user pressed our image target. Sync up the coordinate systems the next time we get an update.
             Debug.Log("Image target pressed.");
             this.syncNextTick = true;
+        }
+
+        private void SpawnHoopAtTrackedImg(GameObject trackedImage)
+        {
+            // Instantiate a Hoop prefab at the exact location of the tracked image.
+            Vector3 posOffset = new Vector3(0, 2, 0);
+            Quaternion rotOffset = Quaternion.Euler(90, 0, 0);
+            this.targetHoop = PhotonNetwork.Instantiate("Hoop", posOffset + trackedImage.transform.position, rotOffset * trackedImage.transform.rotation);
         }
 
         private void MatchReferenceCoordinateSystem(GameObject trackedImage)
