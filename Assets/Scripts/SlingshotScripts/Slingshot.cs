@@ -72,6 +72,7 @@ namespace ARSlingshot
         /// </summary>
         void Start()
         {
+            this.IsBuildOrPlayChanged(false, true);
             this.UpdatePullbackVisuals();
             this.PositionSlingshotInFrontOfCamera();
         }
@@ -123,19 +124,6 @@ namespace ARSlingshot
             return pelletWorldTransform.gameObject.AddComponent<PelletShot>();
         }
 
-        /// <summary>
-        /// An event sent from BalloonPopController when EarthTracking changes
-        /// </summary>
-        /// <param name="newTrackingState">The latest tracking state
-        public void EarthAnchorsTrackingStateChanged(TrackingState newTrackingState)
-        {
-            bool isVisible = newTrackingState == TrackingState.Tracking;
-
-            slingshotRenderer.enabled = isVisible;
-            reticleRenderer.enabled = isVisible;
-            pelletTransform.gameObject.SetActive(isVisible);
-        }
-
         //   #####  ####### ####### ####### ### #     #  #####   #####  
         //  #     # #          #       #     #  ##    # #     # #     # 
         //  #       #          #       #     #  # #   # #       #       
@@ -152,8 +140,6 @@ namespace ARSlingshot
         /// <param name="shouldAnimate">Should we animate the slingshot?
         public void IsBuildOrPlayChanged(bool modeIsBuild, bool shouldAnimate)
         {
-            modeIsBuild = true;
-            shouldAnimate = true;
             float destY = modeIsBuild
                             ? _slingshotOnscreenYPos - yDistToOffscreen
                             : _slingshotOnscreenYPos;
@@ -225,11 +211,11 @@ namespace ARSlingshot
         /// <param name="pos">Latest touch position
         /// 
 
-        //public void SlingshotUITouchDown(Vector2 pos)
-        protected override void OnPressBegan(Vector3 position)
+        public void SlingshotUITouchDown(Vector2 pos)
+        //protected override void OnPressBegan(Vector3 position)
         {
-            base.OnPress(position);
-            Vector2 pos = new Vector2(position.x, position.y);
+            //base.OnPress(position);
+            //Vector2 pos = new Vector2(position.x, position.y);
 
             if (_isShooting) return;
             _touchDownPos = pos;
@@ -239,10 +225,11 @@ namespace ARSlingshot
         /// TouchMoved callback from SlingshotTouchResponder
         /// </summary>
         /// <param name="pos">Latest touch position
-        protected override void OnPress(Vector3 position)
+        public void SlingshotUITouchMoved(Vector2 pos)
+        //protected override void OnPress(Vector3 position)
         {
-            base.OnPress(position);
-            Vector2 pos = new Vector2(position.x, position.y);
+            //base.OnPress(position);
+            //Vector2 pos = new Vector2(position.x, position.y);
             if (_touchDownPos == null) return;
 
             Vector2 delta = (Vector2)_touchDownPos - pos;
@@ -260,10 +247,12 @@ namespace ARSlingshot
         /// TouchEnded callback from SlingshotTouchResponder
         /// </summary>
         /// <param name="pos">Latest touch position
-        protected override void OnPressCancel(Vector3 position)
+        public void SlingshotUITouchEnded(Vector2 pos)
         {
-            base.OnPressCancel(position);
-            Vector2 pos = new Vector2(position.x, position.y);
+            //protected override void OnPressCancel(Vector3 position)
+            //{
+            //    base.OnPressCancel(position);
+            //    Vector2 pos = new Vector2(position.x, position.y);
             if (_touchDownPos == null) return;
 
             this.PerformShot();

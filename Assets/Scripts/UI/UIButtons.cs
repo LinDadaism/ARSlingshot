@@ -1,8 +1,10 @@
 ﻿namespace ARSlingshot
 {
+    using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
     using UnityEngine.XR.Interaction.Toolkit.AR;
+    //using static TreeEditor.TreeGroup;
 
     /// <summary>
     /// Implements UI button functionality. See <see cref="UnityEngine.XR.ARFoundation.Samples.BackButton"/> for the back button implementation.
@@ -18,22 +20,38 @@
         [SerializeField]
         private GameObject toggleManipulateButton;
 
+        public SlingshotTouchResponder slingshotTouchResponder;
+        public TextMeshProUGUI debugTextUI;
+
         private bool isPlacing;
         private bool isManipulating;
+
 
         /// <summary>
         /// Gets a value indicating whether the user is currently idle, i.e., no special UI mode is active.
         /// </summary>
         public bool IsIdle => !this.isPlacing && !this.isManipulating;
 
+
+        private void Start()
+        {
+            slingshotTouchResponder.gameObject.SetActive(!this.isPlacing && !this.isManipulating);
+            Debug.Log("Slingshot SET" + slingshotTouchResponder.gameObject.activeSelf);
+            debugTextUI.text = "Slingshot SET" + slingshotTouchResponder.gameObject.activeSelf;
+        }
+
         public void TogglePlacementButtonPressed()
         {
+            slingshotTouchResponder.gameObject.SetActive(!this.isPlacing && !this.isManipulating);
+            Debug.Log("Slingshot RESET" + slingshotTouchResponder.gameObject.activeSelf);
+            debugTextUI.text = "Slingshot RESET" + slingshotTouchResponder.gameObject.activeSelf;
             this.SetManipulateState(false);
             this.SetPlacementState(!this.isPlacing);
         }
 
         public void ToggleManipulateButtonPressed()
         {
+            slingshotTouchResponder.gameObject.SetActive(!this.isPlacing && !this.isManipulating);
             this.SetPlacementState(false);
             this.SetManipulateState(!this.isManipulating);
         }
