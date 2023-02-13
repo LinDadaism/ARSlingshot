@@ -333,6 +333,7 @@ namespace ARSlingshot
         private void PerformShot()
         {
             _isShooting = true;
+            Debug.LogError("[Slingshot][PeformShot]");
             AnimateShot();
 
             this.UpdateSlingshotShake(0);
@@ -375,7 +376,7 @@ namespace ARSlingshot
                     this.pelletShot.transform.position = this.pelletTransform.position;
                     this.pelletShot.transform.rotation = this.pelletTransform.rotation;
                     this.pelletTransform.gameObject.SetActive(false);
-
+                    Debug.LogError("[Slingshot][AnimateShot] shotSpeed * 0.4f" + (shotSpeed * 0.4f));
                     this.pelletShot.ShootWithSpeedAtCurrentRotation(shotSpeed * 0.4f);
 
                     AnimateSlingToRest(shotSpeed);
