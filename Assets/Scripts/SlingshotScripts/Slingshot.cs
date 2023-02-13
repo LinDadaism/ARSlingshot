@@ -59,7 +59,8 @@ namespace ARSlingshot
             _slingshotOnscreenXRot = this.transform.eulerAngles.x;
 
             // TODO: Create a stack of spare shots
-            pelletShot = CreatePelletShot(pelletTransform);
+            //pelletShot = CreatePelletShot(pelletTransform);
+
             _originalSlingshotRendLocalPos = slingshotRenderer.transform.localPosition;
 
             slingshotRenderer.enabled = false;
@@ -72,9 +73,16 @@ namespace ARSlingshot
         /// </summary>
         void Start()
         {
+            NetworkLauncher.Singleton.JoinedRoom += Singleton_JoinedRoom;
             this.IsBuildOrPlayChanged(false, true);
             this.UpdatePullbackVisuals();
             this.PositionSlingshotInFrontOfCamera();
+        }
+
+        private void Singleton_JoinedRoom(NetworkLauncher sender)
+        {
+            pelletShot = CreatePelletShot(pelletTransform);
+            //throw new System.NotImplementedException();
         }
 
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -113,6 +121,7 @@ namespace ARSlingshot
         static PelletShot CreatePelletShot(Transform origTransform)
         {
             //Transform pelletWorldTransform = Instantiate(origTransform, origTransform.position, origTransform.rotation, origTransform.parent);
+            //Transform pelletWorldTransform = PhotonNetwork.Instantiate("Pellet", origTransform.position, origTransform.rotation).transform;
             Transform pelletWorldTransform = PhotonNetwork.Instantiate("Pellet", origTransform.position, origTransform.rotation).transform;
             pelletWorldTransform.localScale = origTransform.localScale;
             pelletWorldTransform.parent = null;

@@ -32,6 +32,7 @@ namespace ARSlingshot
         /// </summary>
         public void removeAllForces() {
             if (_rigidBody == null) return;
+            Debug.LogError("[PelletShot][removeAllForces]");
             _rigidBody.velocity = Vector3.zero;
         }
 
@@ -41,6 +42,7 @@ namespace ARSlingshot
         /// <param name="speedPercent">A speed to perform the pellet shot with</param>
         public void ShootWithSpeedAtCurrentRotation(float speedPercent) {
             if (_rigidBody == null) return;
+            Debug.LogError("[PelletShot][ShootWithSpeedAtCurrentRotation]");
 
             // _isAirborne = true;
             _speed = 50f * speedPercent;

@@ -1,5 +1,6 @@
 namespace ARSlingshot
 {
+    using System;
     using UnityEngine;
     using UnityEngine.EventSystems;
     using UnityEngine.InputSystem;
@@ -32,6 +33,16 @@ namespace ARSlingshot
             };
 
             m_PressAction.canceled += _ => OnPressCancel();
+        }
+
+        private void M_PressAction_started(InputAction.CallbackContext ctx)
+        {
+            
+                if (ctx.control.device is Pointer device)
+                {
+                    OnPressBegan(device.position.ReadValue());
+                }
+        
         }
 
         protected virtual void OnEnable()
