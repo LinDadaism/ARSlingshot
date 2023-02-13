@@ -15,6 +15,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39ee7158282454448b9d11a219de6004,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 39ee7158282454448b9d11a219de6004,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 39ee7158282454448b9d11a219de6004,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 39ee7158282454448b9d11a219de6004,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -31,12 +46,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 39ee7158282454448b9d11a219de6004,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39ee7158282454448b9d11a219de6004,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39ee7158282454448b9d11a219de6004,
         type: 3}
@@ -51,7 +66,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 39ee7158282454448b9d11a219de6004,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39ee7158282454448b9d11a219de6004,
         type: 3}
@@ -62,6 +77,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 39ee7158282454448b9d11a219de6004,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 39ee7158282454448b9d11a219de6004,
         type: 3}
@@ -77,7 +97,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8334495215514326801}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &7418997572849640179
+--- !u!58 &6307181951276313608
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,7 +112,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.96
+  m_Radius: 0.95
 --- !u!114 &1857824857434334724
 MonoBehaviour:
   m_ObjectHideFlags: 0

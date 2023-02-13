@@ -36,6 +36,7 @@ namespace ARSlingshot
         private bool syncNextTick;
 
         private GameObject targetHoop;
+        private bool hoopSpawned;
 
         private void Awake()
         {
@@ -132,10 +133,13 @@ namespace ARSlingshot
 
         private void SpawnHoopAtTrackedImg(GameObject trackedImage)
         {
-            // Instantiate a Hoop prefab at the exact location of the tracked image.
-            Vector3 posOffset = new Vector3(0, 2, 0);
-            Quaternion rotOffset = Quaternion.Euler(90, 0, 0);
-            this.targetHoop = PhotonNetwork.Instantiate("Hoop", posOffset + trackedImage.transform.position, rotOffset * trackedImage.transform.rotation);
+            // Instantiate a Hoop prefab only once at the exact location of the tracked image.
+            if (!this.hoopSpawned)
+            {
+                Vector3 posOffset = new Vector3(0, 4, 0);
+                Quaternion rotOffset = Quaternion.Euler(90, 0, 0);
+                this.targetHoop = PhotonNetwork.Instantiate("Hoop", posOffset + trackedImage.transform.position, rotOffset * trackedImage.transform.rotation);
+            }
         }
 
         private void MatchReferenceCoordinateSystem(GameObject trackedImage)
