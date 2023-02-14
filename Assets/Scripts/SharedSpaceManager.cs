@@ -136,7 +136,8 @@ namespace ARSlingshot
             // Instantiate a Hoop prefab only once at the exact location of the tracked image.
             if (!this.hoopSpawned)
             {
-                Vector3 posOffset = new Vector3(0, 4, 0);
+                hoopSpawned = true;
+                Vector3 posOffset = trackedImage.transform.up * 2.5f;
                 Quaternion rotOffset = Quaternion.Euler(90, 0, 0);
                 this.targetHoop = PhotonNetwork.Instantiate("Hoop", posOffset + trackedImage.transform.position, rotOffset * trackedImage.transform.rotation);
             }
