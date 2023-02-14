@@ -121,7 +121,6 @@ namespace ARSlingshot
         static PelletShot CreatePelletShot(Transform origTransform)
         {
             //Transform pelletWorldTransform = Instantiate(origTransform, origTransform.position, origTransform.rotation, origTransform.parent);
-            //Transform pelletWorldTransform = PhotonNetwork.Instantiate("Pellet", origTransform.position, origTransform.rotation).transform;
             Transform pelletWorldTransform = PhotonNetwork.Instantiate("Pellet", origTransform.position, origTransform.rotation).transform;
             pelletWorldTransform.localScale = origTransform.localScale;
             pelletWorldTransform.parent = null;
@@ -389,6 +388,7 @@ namespace ARSlingshot
                     this.pelletShot.ShootWithSpeedAtCurrentRotation(shotSpeed * 0.4f);
 
                     AnimateSlingToRest(shotSpeed);
+                    pelletShot = CreatePelletShot(pelletTransform);
                 });
         }
 

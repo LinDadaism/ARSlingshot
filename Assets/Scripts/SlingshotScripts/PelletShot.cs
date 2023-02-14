@@ -47,9 +47,11 @@ namespace ARSlingshot
             // _isAirborne = true;
             _speed = 50f * speedPercent;
 
-            Vector3 force = transform.forward * _speed;
+            //Vector3 force = transform.forward * _speed;
 
-            _rigidBody.AddForce(force, ForceMode.Impulse);
+            //_rigidBody.AddForce(force, ForceMode.Impulse);
+            _rigidBody.isKinematic = false;
+            _rigidBody.velocity = transform.forward * _speed;
         }
 
     }
