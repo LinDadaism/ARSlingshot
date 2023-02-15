@@ -15,7 +15,7 @@ namespace ARSlingshot
                 this.GetComponent<ARSelectionInteractable>().enabled = false;
                 this.GetComponent<ARTranslationInteractable>().enabled = false;
                 this.GetComponent<ARRotationInteractable>().enabled = false;
-                this.GetComponent<ARScaleInteractable>().enabled = false;
+                //this.GetComponent<ARScaleInteractable>().enabled = false;
             }
         }
     }

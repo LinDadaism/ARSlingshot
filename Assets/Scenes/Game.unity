@@ -123,6 +123,99 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &91658670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 91658671}
+  - component: {fileID: 91658673}
+  - component: {fileID: 91658672}
+  - component: {fileID: 91658674}
+  m_Layer: 5
+  m_Name: ScoreText (Legacy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &91658671
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91658670}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2304810883084723976}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -427, y: -144}
+  m_SizeDelta: {x: 200, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &91658672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91658670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 44
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 4
+    m_MaxSize: 44
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Score: ??'
+--- !u!222 &91658673
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91658670}
+  m_CullTransparentMesh: 1
+--- !u!114 &91658674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91658670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 928ed6de350943b4090d109bd86fbfac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &124042691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1699,17 +1792,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  waterBucketToSpawn: {fileID: 0}
+  ammunitionToSpawn: {fileID: 0}
   timer: 0
-  spawnPeriod: 0
-  numberSpawnedEachPeriod: 0
-  bucketSpawnPeriod: 0
-  numBucketSpawnedEachPeriod: 0
   originInScreenCoords: {x: 0, y: 0, z: 0}
   score: 0
-  waterLevel: 0
-  numProPack: 0
-  logSelected: 
   horizonMin: 0
   horizonMax: 0
   verticalMin: 0
@@ -2778,6 +2864,7 @@ MonoBehaviour:
     type: 2}
   trackedImageMaterialPostSync: {fileID: 2100000, guid: 6e1fd3ab57cbad24898e46e66380a0ec,
     type: 2}
+  hoopSpawned: 0
 --- !u!114 &1513056498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2790,7 +2877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5359d5f13250e4485741ed685a32be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placedPrefab: {fileID: 4085108242453859580, guid: f2af00cc93e7b4d92bcc82fc16e79c3b,
+  placedPrefab: {fileID: 4412630086756482204, guid: d31b86aa10f567b40b7a557901a1bf36,
     type: 3}
 --- !u!1 &1575126821
 GameObject:
@@ -3287,6 +3374,7 @@ RectTransform:
   - {fileID: 835797454}
   - {fileID: 1189354611}
   - {fileID: 611334852}
+  - {fileID: 91658671}
   m_Father: {fileID: 1828008920}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

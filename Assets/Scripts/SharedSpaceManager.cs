@@ -36,7 +36,7 @@ namespace ARSlingshot
         private bool syncNextTick;
 
         private GameObject targetHoop;
-        private bool hoopSpawned;
+        public bool hoopSpawned;
 
         private void Awake()
         {
@@ -140,6 +140,7 @@ namespace ARSlingshot
                 Vector3 posOffset = trackedImage.transform.up * 2.5f;
                 Quaternion rotOffset = Quaternion.Euler(90, 0, 0);
                 this.targetHoop = PhotonNetwork.Instantiate("Hoop", posOffset + trackedImage.transform.position, rotOffset * trackedImage.transform.rotation);
+                this.targetHoop.GetPhotonView().RPC("UpdateHoop", RpcTarget.Others, hoopSpawned);
             }
         }
 

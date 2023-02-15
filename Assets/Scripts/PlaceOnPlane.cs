@@ -57,16 +57,37 @@ namespace ARSlingshot
             // Raycast against layer "GroundPlane" using normal Raycasting for our artifical ground plane.
             // For AR Foundation planes (if enabled), we use AR Raycasting.
             var ray = Camera.main.ScreenPointToRay(touchPosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("GroundPlane")))
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Airplane")))
             {
-                this.CreateOrUpdateObject(hit.point, hit.transform.rotation);
+                //Debug.Log("using Physics raycast");
+
+                GameObject hitObject = hit.transform.gameObject;
+                if (hitObject.GetComponent<Collider>().CompareTag("Airplane"))
+                {
+                    //Debug.Log("airplane selected");
+
+                    this.SpawnedObject = hitObject;
+
+                    // update score
+                    GameObject obj = GameObject.Find("GlobalManager");
+                    GlobalManager m = obj.GetComponent<GlobalManager>();
+                    m.score++;
+                    // Destroy removes the gameObject from the scene and
+                    // marks it for garbage collection
+                    Destroy(hitObject);
+
+                    // highlight the object selected
+                    //hitObject.transform.GetChild(0).gameObject.SetActive(true);
+                }
             }
             else if (this.m_RaycastManager.Raycast(touchPosition, PlaceOnPlane.s_Hits, TrackableType.PlaneWithinPolygon))
             {
+                Debug.Log("using AR raycast");
+
                 // Raycast hits are sorted by distance, so the first one
                 // will be the closest hit.
                 var hitPose = PlaceOnPlane.s_Hits[0].pose;
-                this.CreateOrUpdateObject(hitPose.position, hitPose.rotation);
+                this.CreateOrUpdateObject(hit.point, hit.transform.rotation);
             }
         }
 
@@ -75,6 +96,7 @@ namespace ARSlingshot
             if (this.SpawnedObject == null)
             {
                 this.SpawnedObject = PhotonNetwork.Instantiate(this.placedPrefab.name, position, rotation);
+                Debug.Log("no gameobj");
             }
             else
             {
