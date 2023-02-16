@@ -86,9 +86,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             s_SelectedMenuInfo.menuName = menuName;
         }
 
-        public void LoadScene(string sceneName)
+        public void LoadScene(int playerType)
         {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            PlayerPrefs.SetInt("PlayerType", playerType);
+            SceneManager.LoadScene("Game", LoadSceneMode.Single);
         }
 
         public void ExitGame()

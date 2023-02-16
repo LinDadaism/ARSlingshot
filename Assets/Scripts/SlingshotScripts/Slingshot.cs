@@ -73,15 +73,20 @@ namespace ARSlingshot
         /// </summary>
         void Start()
         {
-            NetworkLauncher.Singleton.JoinedRoom += Singleton_JoinedRoom;
-            this.IsBuildOrPlayChanged(false, true);
-            this.UpdatePullbackVisuals();
-            this.PositionSlingshotInFrontOfCamera();
+            this.enabled = (PlayerPrefs.GetInt("PlayerType") == 1) ? true : false;
+            if(this.enabled)
+                FindObjectOfType<SharedSpaceManager>().ScannedImage += Singleton_ScannedImage;
+                //NetworkLauncher.Singleton.JoinedRoom += Singleton_JoinedRoom;
+
         }
 
-        private void Singleton_JoinedRoom(NetworkLauncher sender)
+        private void Singleton_ScannedImage(SharedSpaceManager sender)
+        //private void Singleton_JoinedRoom(NetworkLauncher sender)
         {
             pelletShot = CreatePelletShot(pelletTransform);
+            this.SlingshotSetup();
+            this.UpdatePullbackVisuals();
+            this.PositionSlingshotInFrontOfCamera();
             //throw new System.NotImplementedException();
         }
 
@@ -107,6 +112,8 @@ namespace ARSlingshot
             localPos.z = this._distAhead * _screenAspect;
             _slingshotOnscreenYPos = this._originalSlingshotRendLocalPos.y + _slingshotLocalYOffset;
             this.transform.localPosition = localPos;
+
+            //Debug.LogError("[Slingshot][PositionSlingshotInFrontOfCamera]slingshotTransform" + localPos);
         }
 
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -121,15 +128,33 @@ namespace ARSlingshot
         static PelletShot CreatePelletShot(Transform origTransform)
         {
             //Transform pelletWorldTransform = Instantiate(origTransform, origTransform.position, origTransform.rotation, origTransform.parent);
-            Transform pelletWorldTransform = PhotonNetwork.Instantiate("Pellet", origTransform.position, origTransform.rotation).transform;
-            pelletWorldTransform.localScale = origTransform.localScale;
-            pelletWorldTransform.parent = null;
-            pelletWorldTransform.name = "WORLD PELLET";
-            // pelletWorldTransform.gameObject.SetActive(false);
-            pelletWorldTransform.gameObject.layer = 7; // "pellet"
-            pelletWorldTransform.transform.position = new Vector3(999, 999, 999);
+            GameObject spawnedPellet = PhotonNetwork.Instantiate("Pellet", origTransform.position, origTransform.rotation);
 
-            return pelletWorldTransform.gameObject.AddComponent<PelletShot>();
+            //Debug.LogError("[Slingshot][CreatePelletShot]origTransform" + origTransform.position);
+            //Debug.LogError("[Slingshot][CreatePelletShot]origTransformLocal" + origTransform.localPosition);
+            //Debug.LogError("[Slingshot][CreatePelletShot]spawnedTransform" + spawnedPellet.transform.position);
+            //Debug.LogError("[Slingshot][CreatePelletShot]spawnedTransformLocal" + spawnedPellet.transform.localPosition);
+
+            //Debug.LogError("[Slingshot][CreatePelletShot]origParent" + origTransform.parent.name);
+            //Debug.LogError("[Slingshot][CreatePelletShot]spawnedParent" + spawnedPellet.transform.parent.name);
+
+
+            spawnedPellet.transform.localPosition = new Vector3(0,0,0);
+            //spawnedPellet.transform.localScale = origTransform.localScale;
+
+            spawnedPellet.transform.parent = null;
+            spawnedPellet.transform.name = "WORLD PELLET";
+            spawnedPellet.transform.gameObject.SetActive(false);
+            spawnedPellet.transform.gameObject.layer = 7; // "pellet"
+            spawnedPellet.transform.position = new Vector3(999, 999, 999);
+
+            spawnedPellet.transform.gameObject.SetActive(false);
+
+            Debug.LogError("[Slingshot][CreatePelletShot]spawnedName1" + spawnedPellet.transform.gameObject.name);
+            Debug.LogError("[Slingshot][CreatePelletShot]spawnedName2" + spawnedPellet.name);
+
+            return spawnedPellet.transform.gameObject.AddComponent<PelletShot>();
+
         }
 
         //   #####  ####### ####### ####### ### #     #  #####   #####  
@@ -191,6 +216,32 @@ namespace ARSlingshot
             }
         }
 
+        public void SlingshotSetup()
+        {
+            float destY = _slingshotOnscreenYPos;
+
+            float destLocalXRot = _slingshotOnscreenXRot;
+            slingshotRenderer.enabled = true;
+            reticleRenderer.enabled = true;
+            pelletTransform.gameObject.SetActive(true);
+
+
+            // ANIMATE
+            float animDuration = 0.6f;
+            EaseType ease = EaseType.BackOut;
+
+            // Animate the slingshot on/off-screen
+            this.transform
+                .TweenLocalPositionY(destY, animDuration)
+                .SetEase(ease);
+
+            // Animate the rotation too...
+            ease = EaseType.ExpoOut;
+            this.transform.TweenLocalRotationX(destLocalXRot, animDuration)
+            // this.transform.TweenLocalRotation(destRot, animDuration)
+                .SetEase(ease);
+        }
+
         // --------------------------------------------
 
         //  ### #     # ######  #     # ####### 
@@ -220,11 +271,7 @@ namespace ARSlingshot
         /// 
 
         public void SlingshotUITouchDown(Vector2 pos)
-        //protected override void OnPressBegan(Vector3 position)
         {
-            //base.OnPress(position);
-            //Vector2 pos = new Vector2(position.x, position.y);
-
             if (_isShooting) return;
             _touchDownPos = pos;
         }
@@ -234,10 +281,7 @@ namespace ARSlingshot
         /// </summary>
         /// <param name="pos">Latest touch position
         public void SlingshotUITouchMoved(Vector2 pos)
-        //protected override void OnPress(Vector3 position)
         {
-            //base.OnPress(position);
-            //Vector2 pos = new Vector2(position.x, position.y);
             if (_touchDownPos == null) return;
 
             Vector2 delta = (Vector2)_touchDownPos - pos;
@@ -257,12 +301,8 @@ namespace ARSlingshot
         /// <param name="pos">Latest touch position
         public void SlingshotUITouchEnded(Vector2 pos)
         {
-            //protected override void OnPressCancel(Vector3 position)
-            //{
-            //    base.OnPressCancel(position);
-            //    Vector2 pos = new Vector2(position.x, position.y);
             if (_touchDownPos == null) return;
-
+            
             this.PerformShot();
 
             _touchDownPos = null;
@@ -309,6 +349,7 @@ namespace ARSlingshot
 
             if (this.pelletTransform.gameObject.activeInHierarchy) return;
             this.pelletTransform.gameObject.SetActive(false);
+            //Debug.LogError("[Slingshot]Pellet set to false - This should never be printed");
         }
 
         /// <summary>
@@ -341,7 +382,7 @@ namespace ARSlingshot
         private void PerformShot()
         {
             _isShooting = true;
-            Debug.LogError("[Slingshot][PeformShot]");
+            
             AnimateShot();
 
             this.UpdateSlingshotShake(0);
@@ -378,17 +419,25 @@ namespace ARSlingshot
                 .SetEaseLinear()
                 .SetOnComplete(() =>
                 {
+
+                    //this.pelletTransform.localPosition = new Vector3(0, 0, 0);
                     // SHOOT THE WORLD PELLET
                     this.pelletShot.gameObject.SetActive(true);
                     this.pelletShot.removeAllForces();
                     this.pelletShot.transform.position = this.pelletTransform.position;
+                    //this.pelletShot.transform.localPosition = this.pelletTransform.localPosition;
                     this.pelletShot.transform.rotation = this.pelletTransform.rotation;
                     this.pelletTransform.gameObject.SetActive(false);
-                    Debug.LogError("[Slingshot][AnimateShot] shotSpeed * 0.4f" + (shotSpeed * 0.4f));
+
+                    //Debug.LogError("[Slingshot][AnimateShot]origTransform" + pelletTransform.position);
+                    //Debug.LogError("[Slingshot][AnimateShot]origTransformLocal" + pelletTransform.localPosition);
+                    //Debug.LogError("[Slingshot][AnimateShot]spawnedTransform" + pelletShot.transform.position);
+                    //Debug.LogError("[Slingshot][AnimateShot]spawnedTransformLocal" + pelletShot.transform.localPosition);
+
                     this.pelletShot.ShootWithSpeedAtCurrentRotation(shotSpeed * 0.4f);
 
                     AnimateSlingToRest(shotSpeed);
-                    pelletShot = CreatePelletShot(pelletTransform);
+                    //pelletShot = CreatePelletShot(pelletTransform);
                 });
         }
 
@@ -434,7 +483,7 @@ namespace ARSlingshot
             this._pullbackPercent = 0;
             this.UpdatePullbackVisuals();
             this.pelletTransform.gameObject.SetActive(true);
-
+            //Debug.LogError("[Slingshot][SlingToRestAnimationComplete]");
             _isShooting = false;
         }
 
@@ -461,6 +510,15 @@ namespace ARSlingshot
         void Update()
         {
             if (this._pullbackPercent > 0) this.UpdateSlingshotShake(this._pullbackPercent * 0.01f);
+
+            //// DEBUG: UNCOMMENT TO TEST ANIMATE SHOT ON PC
+            //if (Input.GetKeyDown(KeyCode.A))
+            //{
+            //    this._pullbackPercent = 1f;
+            //    Application.targetFrameRate = 1;
+            //    AnimateShot();
+            //}
+
         }
     }
 }

@@ -7,6 +7,7 @@ namespace ARSlingshot
     using UnityEngine;
     using UnityEngine.XR.ARFoundation;
     using UnityEngine.XR.ARSubsystems;
+    using static ARSlingshot.NetworkLauncher;
 
     /// <summary>
     /// Class responsible for managing the creation of one shared space for all devices.
@@ -15,6 +16,17 @@ namespace ARSlingshot
     /// </summary>
     public class SharedSpaceManager : MonoBehaviour
     {
+        ///// <summary>
+        ///// Event handler for when target image has been detected.
+        ///// </summary>
+        ///// <param name="sender">The shared space manager</param>
+        public delegate void SharedSpaceImageScannedEventHandler(SharedSpaceManager sender);
+
+        ///// <summary>
+        ///// Event that is raised when the client has scannedTargetImage.
+        ///// </summary>
+        public event SharedSpaceImageScannedEventHandler ScannedImage;
+
         [SerializeField]
         private ARTrackedImageManager arTrackedImageManager;
 
@@ -38,9 +50,15 @@ namespace ARSlingshot
         private GameObject targetHoop;
         public bool hoopSpawned;
 
+        /// <summary>
+        /// Gets a value indicating whether we have scanned image and found origin
+        /// </summary>
+        public bool HasFoundOrigin => this.hasFoundOrigin;
+
         private void Awake()
         {
-            // Image tracking needs a mobile device to work.
+            //// DEBUG: COMMENT OUT TO TEST ON PC
+            //// Image tracking needs a mobile device to work.
             if (!Application.isMobilePlatform)
             {
                 this.enabled = false;
@@ -110,6 +128,8 @@ namespace ARSlingshot
                             this.ShowOutline(true, false);
                             this.SpawnHoopAtTrackedImg(trackedImg.gameObject);
                             this.MatchReferenceCoordinateSystem(trackedImg.gameObject);
+                            if(!hasFoundOrigin)
+                                this.ScannedImage?.Invoke(this);
                             this.hasFoundOrigin = true;
                             this.syncNextTick = false;
                         }
@@ -186,6 +206,14 @@ namespace ARSlingshot
         private void Update()
         {
             // Update our camera position every frame.
+
+            //// DEBUG: UNCOMMENT TO TEST ON PC WITHOUT IMAGE TRACKING
+            //if (Input.GetKeyDown(KeyCode.K))
+            //{
+            //    hasFoundOrigin = true;
+            //    hasFoundImageTarget = true;
+            //    this.ScannedImage?.Invoke(this);
+            //}
             if (this.arCamera != null)
             {
                 var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");

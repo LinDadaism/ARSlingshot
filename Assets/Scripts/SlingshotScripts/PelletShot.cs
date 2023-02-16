@@ -15,16 +15,10 @@ namespace ARSlingshot
         /// <summary>
         /// Start is called before the first frame update
         /// </summary>
-        void Start()
+        void OnEnable()
         {
             _sphereCollider = GetComponent<SphereCollider>();
             _rigidBody = GetComponent<Rigidbody>();
-            _rigidBody.useGravity = true;
-            _rigidBody.drag = 1f;
-            _rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-
-            _sphereCollider.radius = transform.localScale.x * 3.8f;
-        
         }
 
         /// <summary>
@@ -32,7 +26,7 @@ namespace ARSlingshot
         /// </summary>
         public void removeAllForces() {
             if (_rigidBody == null) return;
-            Debug.LogError("[PelletShot][removeAllForces]");
+            //Debug.LogError("[PelletShot][removeAllForces]");
             _rigidBody.velocity = Vector3.zero;
         }
 
@@ -42,17 +36,26 @@ namespace ARSlingshot
         /// <param name="speedPercent">A speed to perform the pellet shot with</param>
         public void ShootWithSpeedAtCurrentRotation(float speedPercent) {
             if (_rigidBody == null) return;
-            Debug.LogError("[PelletShot][ShootWithSpeedAtCurrentRotation]");
+            //Debug.LogError("[PelletShot][ShootWithSpeedAtCurrentRotation] transform.forward" + transform.forward);
+            //Debug.LogError("[PelletShot][ShootWithSpeedAtCurrentRotation] transform.position" + transform.position);
+            //Debug.LogError("[PelletShot][ShootWithSpeedAtCurrentRotation] transform.position" + transform.localPosition);
 
             // _isAirborne = true;
             _speed = 50f * speedPercent;
 
             //Vector3 force = transform.forward * _speed;
-
             //_rigidBody.AddForce(force, ForceMode.Impulse);
+
+            //// DEBUG: To view direction on PC Scene
+            //Debug.DrawLine(transform.position, transform.position + (transform.forward * 10), Color.red, 20);
             _rigidBody.isKinematic = false;
             _rigidBody.velocity = transform.forward * _speed;
+            //Debug.Log("forceShoot" + this.GetComponent<Rigidbody>().velocity);
         }
 
+        //private void Update()
+        //{
+        //    //Debug.Log("force" + this.GetComponent<Rigidbody>().velocity);
+        //}
     }
 }

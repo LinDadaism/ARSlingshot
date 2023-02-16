@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using Photon.Pun;
+    using UnityEngine.UIElements;
 
     /// <summary>
     /// Launches projectiles from a touch point with the specified <see cref="initialSpeed"/>.
@@ -15,11 +16,23 @@
         [SerializeField]
         private float initialSpeed = 25;
 
+        private bool planeMode;
+
+        private bool _joinedRoom = false;
+
+        private void Start()
+        {
+            this.enabled = (PlayerPrefs.GetInt("PlayerType") == 0) ? true : false;
+            Debug.LogError("[Projectile]Playerpref:" + PlayerPrefs.GetInt("PlayerType"));
+            Debug.LogError("[Projectile]enabled?" + this.enabled);
+        }
+
         protected override void OnPressBegan(Vector3 position)
         {
-            if (this.projectilePrefab == null || !NetworkLauncher.Singleton.HasJoinedRoom)
+            //if (this.projectilePrefab == null || !NetworkLauncher.Singleton.HasJoinedRoom)
+            if (this.projectilePrefab == null || !FindObjectOfType<SharedSpaceManager>().HasFoundOrigin)
                 return;
-
+            Debug.LogError("[PlaneSpawned]");
             // Ensure user is not doing anything else.
             var uiButtons = FindObjectOfType<UIButtons>();
             if (uiButtons != null && (uiButtons.IsPointOverUI(position) || !uiButtons.IsIdle))

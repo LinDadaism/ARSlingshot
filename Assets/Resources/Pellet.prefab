@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: -569440208190098270}
   - component: {fileID: -258011973133216919}
   - component: {fileID: 5511107098089457746}
-  - component: {fileID: -3702888045965870115}
   m_Layer: 0
   m_Name: Pellet
   m_TagString: Untagged
@@ -30,13 +29,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472675100895848766}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.08715578, y: -0, z: -0, w: 0.9961947}
+  m_LocalPosition: {x: 0, y: -0.2, z: -0.136}
+  m_LocalScale: {x: 0.041228663, y: 0.041228663, z: 0.041228663}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3402067798797096482
 MeshFilter:
@@ -156,15 +155,3 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &-3702888045965870115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 472675100895848766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3bae19c0c6bdfa499e990f29db12850, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
