@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 4832875062585378676}
   - component: {fileID: 6535724954884202497}
   - component: {fileID: 8799003651731038179}
+  - component: {fileID: 6466696548087631804}
   m_Layer: 12
   m_Name: Airplane
   m_TagString: Airplane
@@ -423,6 +424,18 @@ MonoBehaviour:
   m_ARSessionOrigin: {fileID: 0}
   m_RotationRateDegreesDrag: 100
   m_RotationRateDegreesTwist: 2.5
+--- !u!114 &6466696548087631804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4412630086756482204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d384e6fff9255044a957e2b2f9686019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5668782604163711527
 GameObject:
   m_ObjectHideFlags: 0

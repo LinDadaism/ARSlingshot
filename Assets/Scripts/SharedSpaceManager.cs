@@ -160,7 +160,8 @@ namespace ARSlingshot
                 Vector3 posOffset = trackedImage.transform.up * 2.5f;
                 Quaternion rotOffset = Quaternion.Euler(90, 0, 0);
                 this.targetHoop = PhotonNetwork.Instantiate("Hoop", posOffset + trackedImage.transform.position, rotOffset * trackedImage.transform.rotation);
-                this.targetHoop.GetPhotonView().RPC("UpdateHoop", RpcTarget.Others, hoopSpawned);
+                this.targetHoop.GetPhotonView().RPC("UpdateHoop", RpcTarget.OthersBuffered, hoopSpawned);
+                Debug.Log("1st player hoop spawned");
             }
         }
 

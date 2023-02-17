@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 175, y: -391}
+  m_AnchoredPosition: {x: 201, y: -324}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &91658672
@@ -930,7 +930,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 175, y: -96}
+  m_AnchoredPosition: {x: 250, y: -139}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &219538230
@@ -1223,7 +1223,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 175, y: -44}
+  m_AnchoredPosition: {x: 250, y: -87}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &455423400
@@ -1358,7 +1358,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 175, y: -201}
+  m_AnchoredPosition: {x: 250, y: -244}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &611334853
@@ -1381,7 +1381,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DebugText
+  m_text: 'DebugText: test RPC update'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2150,7 +2150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a048595fe7469249872d53cb20bb450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammunitionToSpawnPrefab: {fileID: 0}
+  ammunitionToSpawnPrefab: {fileID: 1728619453497436, guid: 903ba192b46d0364e90d45fc92b38b73,
+    type: 3}
   originInScreenCoords: {x: 0, y: 0, z: 0}
   noOfPlanes: 5
   noOfPlanesUI: {fileID: 455423401}
@@ -2159,6 +2160,11 @@ MonoBehaviour:
   hoopScore: 0
   hoopScoreUI: {fileID: 1475383566}
   gameState: 0
+  hoopScoreIncrement: 0
+  pelletToSpawn: {fileID: 472675100895848766, guid: 4a7924a0a6f0f6846bf728df24585d81,
+    type: 3}
+  spawnPeriod: 1
+  numberSpawnedEachPeriod: 3
 --- !u!1 &993661983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3032,7 +3038,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 175, y: -148}
+  m_AnchoredPosition: {x: 250, y: -191}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1483511438
@@ -3485,7 +3491,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -101, y: -141}
+  m_AnchoredPosition: {x: -144, y: -184}
   m_SizeDelta: {x: 150.49927, y: 357.60107}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2080766952
@@ -3680,7 +3686,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Return
+  m_Text: Restart
 --- !u!224 &1463629242896003768
 RectTransform:
   m_ObjectHideFlags: 0

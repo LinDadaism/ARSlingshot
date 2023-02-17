@@ -22,6 +22,13 @@ namespace ARSlingshot
         public TextMeshProUGUI hoopScoreUI;
 
         public int gameState;
+        public int hoopScoreIncrement;
+
+        // vars below for spawning pellet to test collision with airplane
+        //public GameObject pelletToSpawn;
+        //public float spawnPeriod = 1.0f; // how frequently obj is spawned e.g. every 5 seconds
+        //public int numberSpawnedEachPeriod = 3;
+        //private float timer = 0.0f;
 
         // Use this for initialization
         void Start()
@@ -29,6 +36,7 @@ namespace ARSlingshot
             noOfPlanes = 5;
             noOfPellets = 10;
             hoopScore = 0;
+            hoopScoreIncrement = 10;
 
             this.noOfPlanesUI.text = "Planes: " + this.noOfPlanes;
             this.noOfPelletsUI.text = "Ammo: " + this.noOfPellets;
@@ -42,11 +50,12 @@ namespace ARSlingshot
 
         private Vector3 randomPosGenerator()
         {
-            return new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
+            return new Vector3(Random.Range(-2, 2), 0.5f, Random.Range(-2, 2));
         }
 
         void Update()
         {
+            /*---------start: test pellet airplane collision---------*/
             //timer += Time.deltaTime;
             //// spawn animals
             //if (timer > spawnPeriod)
@@ -56,20 +65,21 @@ namespace ARSlingshot
             //    //float height = Screen.height;
             //    for (int i = 0; i < numberSpawnedEachPeriod; i++)
             //    {
-            //        float horizontalPos = Random.Range(horizonMin, horizonMax);// 250.0f, 750.0f);
-            //        float verticalPos = Random.Range(verticalMin, verticalMax);// 500.0f, 1400.0f);
-            //        float yRotation = Random.Range(1.0f, 360.0f);
-            //        int idx = Random.Range(0, 5);
-            //        Instantiate(objsToSpawn[idx],
-            //            Camera.main.ScreenToWorldPoint(new Vector3(horizontalPos, verticalPos, originInScreenCoords.z)),
-            //            Quaternion.AngleAxis(yRotation, Vector3.up));
+            //        GameObject pellet = PhotonNetwork.Instantiate(pelletToSpawn.name,
+            //            new Vector3(0.0f,0.0f,0.0f),
+            //            Quaternion.identity);
+            //        pellet.transform.Translate(0, 5, 0);
             //    }
             //}
+            /*---------end: test pellet airplane collision---------*/
 
-            if(noOfPellets == 0)
+            if (noOfPellets == 0)
             {
                 if (this.ammunitionToSpawnPrefab == null || !FindObjectOfType<SharedSpaceManager>().HasFoundOrigin)
+                {
+                    Debug.Log("cannot spawn ammo");
                     return;
+                }
 
                 Vector3 ammoPos = randomPosGenerator();
                 PhotonNetwork.Instantiate(this.ammunitionToSpawnPrefab.name, ammoPos, Quaternion.identity);

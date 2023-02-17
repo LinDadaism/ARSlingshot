@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Airplane
+  - Ammo
+  - Pellet
+  - Hoop
   layers:
   - Default
   - TransparentFX

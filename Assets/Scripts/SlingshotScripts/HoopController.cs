@@ -21,7 +21,30 @@ namespace ARSlingshot
             if (sharedSpaceManager != null)
             {
                 sharedSpaceManager.hoopSpawned = exists;
+                Debug.Log("other player hoop updated");
             }
+        }
+
+        // use trigger as collider to allow airplane fly through the hoop
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Airplane"))
+            {
+                // update the score
+                GlobalManager _globalManager = GameObject.Find("GlobalManager").GetComponent<GlobalManager>();
+                _globalManager.hoopScore += _globalManager.hoopScoreIncrement;
+                _globalManager.hoopScoreUI.text = "Hoop Score : " + _globalManager.hoopScore;
+                this.gameObject.GetPhotonView().RPC("UpdateHoopScore", RpcTarget.OthersBuffered);
+            }
+        }
+
+        [PunRPC]
+        public void UpdateHoopScore()
+        {
+            GlobalManager _globalManager = GameObject.Find("GlobalManager").GetComponent<GlobalManager>();
+            _globalManager.hoopScore += _globalManager.hoopScoreIncrement;
+            _globalManager.hoopScoreUI.text = "Hoop Score : " + _globalManager.hoopScore;
+            Debug.Log("all player score updated");
         }
     }
 }
