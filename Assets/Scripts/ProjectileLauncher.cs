@@ -20,19 +20,25 @@
 
         private bool _joinedRoom = false;
 
+        private GlobalManager _globalManager;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _globalManager = GameObject.Find("GlobalManager").GetComponent<GlobalManager>();
+        }
+
         private void Start()
         {
             this.enabled = (PlayerPrefs.GetInt("PlayerType") == 0) ? true : false;
-            Debug.LogError("[Projectile]Playerpref:" + PlayerPrefs.GetInt("PlayerType"));
-            Debug.LogError("[Projectile]enabled?" + this.enabled);
         }
 
         protected override void OnPressBegan(Vector3 position)
         {
             //if (this.projectilePrefab == null || !NetworkLauncher.Singleton.HasJoinedRoom)
-            if (this.projectilePrefab == null || !FindObjectOfType<SharedSpaceManager>().HasFoundOrigin)
+            if (this.projectilePrefab == null || !FindObjectOfType<SharedSpaceManager>().HasFoundOrigin || _globalManager.noOfPlanes == 0)
                 return;
-            Debug.LogError("[PlaneSpawned]");
+
             // Ensure user is not doing anything else.
             var uiButtons = FindObjectOfType<UIButtons>();
             if (uiButtons != null && (uiButtons.IsPointOverUI(position) || !uiButtons.IsIdle))
@@ -47,6 +53,8 @@
             Quaternion camRot = this.GetComponent<Camera>().transform.rotation;
             var projectile = PhotonNetwork.Instantiate(this.projectilePrefab.name, ray.origin, camRot, data: initialData);
 
+            UpdatePlaneCount();
+
             // By default, the projectile is kinematic in the prefab. This is because it should not be affected by physics
             // on clients other than the one owning it. Hence we disable kinematic mode and let the physics engine take over here.
             // It might make sense to have all game physics run on the server for a more complex scenario. You could transfer
@@ -54,6 +62,12 @@
             var rigidbody = projectile.GetComponent<Rigidbody>();
             rigidbody.isKinematic = false;
             rigidbody.velocity = ray.direction * initialSpeed;
+        }
+
+        private void UpdatePlaneCount()
+        {
+            _globalManager.noOfPlanes -= 1;
+            _globalManager.noOfPlanesUI.text = "Planes : " + _globalManager.noOfPlanes;
         }
     }
 }

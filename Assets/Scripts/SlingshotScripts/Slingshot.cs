@@ -46,6 +46,8 @@ namespace ARSlingshot
 
         public float distAheadOffset = 0.5f;
 
+        private GlobalManager _globalManager;
+
         /// <summary>
         /// Unity Awake() Function, called before Start()
         /// </summary>
@@ -53,13 +55,11 @@ namespace ARSlingshot
         {
             base.Awake();
             _cam = GetComponentInParent<Camera>();
+            _globalManager = GameObject.Find("GlobalManager").GetComponent<GlobalManager>();
 
             _pelletLocalOrigin = pelletTransform.localPosition;
             _slingshotOnscreenYPos = this.transform.localPosition.y;
             _slingshotOnscreenXRot = this.transform.eulerAngles.x;
-
-            // TODO: Create a stack of spare shots
-            //pelletShot = CreatePelletShot(pelletTransform);
 
             _originalSlingshotRendLocalPos = slingshotRenderer.transform.localPosition;
 
@@ -73,7 +73,7 @@ namespace ARSlingshot
         /// </summary>
         void Start()
         {
-            this.enabled = (PlayerPrefs.GetInt("PlayerType") == 1) ? true : false;
+            this.gameObject.SetActive((PlayerPrefs.GetInt("PlayerType") == 1) ? true : false);
             if(this.enabled)
                 FindObjectOfType<SharedSpaceManager>().ScannedImage += Singleton_ScannedImage;
                 //NetworkLauncher.Singleton.JoinedRoom += Singleton_JoinedRoom;
@@ -87,7 +87,6 @@ namespace ARSlingshot
             this.SlingshotSetup();
             this.UpdatePullbackVisuals();
             this.PositionSlingshotInFrontOfCamera();
-            //throw new System.NotImplementedException();
         }
 
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -112,8 +111,6 @@ namespace ARSlingshot
             localPos.z = this._distAhead * _screenAspect;
             _slingshotOnscreenYPos = this._originalSlingshotRendLocalPos.y + _slingshotLocalYOffset;
             this.transform.localPosition = localPos;
-
-            //Debug.LogError("[Slingshot][PositionSlingshotInFrontOfCamera]slingshotTransform" + localPos);
         }
 
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -127,20 +124,8 @@ namespace ARSlingshot
         /// <param name="origTransform">The original transform of the Pellet we are duplicating
         static PelletShot CreatePelletShot(Transform origTransform)
         {
-            //Transform pelletWorldTransform = Instantiate(origTransform, origTransform.position, origTransform.rotation, origTransform.parent);
             GameObject spawnedPellet = PhotonNetwork.Instantiate("Pellet", origTransform.position, origTransform.rotation);
-
-            //Debug.LogError("[Slingshot][CreatePelletShot]origTransform" + origTransform.position);
-            //Debug.LogError("[Slingshot][CreatePelletShot]origTransformLocal" + origTransform.localPosition);
-            //Debug.LogError("[Slingshot][CreatePelletShot]spawnedTransform" + spawnedPellet.transform.position);
-            //Debug.LogError("[Slingshot][CreatePelletShot]spawnedTransformLocal" + spawnedPellet.transform.localPosition);
-
-            //Debug.LogError("[Slingshot][CreatePelletShot]origParent" + origTransform.parent.name);
-            //Debug.LogError("[Slingshot][CreatePelletShot]spawnedParent" + spawnedPellet.transform.parent.name);
-
-
             spawnedPellet.transform.localPosition = new Vector3(0,0,0);
-            //spawnedPellet.transform.localScale = origTransform.localScale;
 
             spawnedPellet.transform.parent = null;
             spawnedPellet.transform.name = "WORLD PELLET";
@@ -166,55 +151,8 @@ namespace ARSlingshot
         //   #####  #######    #       #    ### #     #  #####   #####  
 
         /// <summary>
-        /// An event sent from the UI when the Play mode changes
-        /// isBuildOrPlay=true; means the user is in Build Mode
+        /// Setting up slingshot initial position
         /// </summary>
-        /// <param name="modeIsBuild">Create balloons mode, or Play mode
-        /// <param name="shouldAnimate">Should we animate the slingshot?
-        public void IsBuildOrPlayChanged(bool modeIsBuild, bool shouldAnimate)
-        {
-            float destY = modeIsBuild
-                            ? _slingshotOnscreenYPos - yDistToOffscreen
-                            : _slingshotOnscreenYPos;
-
-            float destLocalXRot = modeIsBuild ? xOffscreenRot : _slingshotOnscreenXRot;
-
-            if (!modeIsBuild)
-            {
-                slingshotRenderer.enabled = true;
-                reticleRenderer.enabled = true;
-                pelletTransform.gameObject.SetActive(true);
-            }
-
-            if (!shouldAnimate)
-            {
-                Vector3 destPos = this.transform.localPosition;
-                destPos.y = destY;
-                this.transform.localPosition = destPos;
-
-                Vector3 destRot = this.transform.localEulerAngles;
-                destRot.x = destLocalXRot;
-                this.transform.localRotation = Quaternion.Euler(destRot);
-
-            }
-            else
-            {
-                // ANIMATE
-                float animDuration = 0.6f;
-                EaseType ease = modeIsBuild ? EaseType.ExpoIn : EaseType.BackOut;
-
-                // Animate the slingshot on/off-screen
-                this.transform
-                    .TweenLocalPositionY(destY, animDuration)
-                    .SetEase(ease);
-
-                // Animate the rotation too...
-                ease = modeIsBuild ? EaseType.ExpoIn : EaseType.ExpoOut;
-                this.transform.TweenLocalRotationX(destLocalXRot, animDuration)
-                // this.transform.TweenLocalRotation(destRot, animDuration)
-                    .SetEase(ease);
-            }
-        }
 
         public void SlingshotSetup()
         {
@@ -224,7 +162,6 @@ namespace ARSlingshot
             slingshotRenderer.enabled = true;
             reticleRenderer.enabled = true;
             pelletTransform.gameObject.SetActive(true);
-
 
             // ANIMATE
             float animDuration = 0.6f;
@@ -240,6 +177,9 @@ namespace ARSlingshot
             this.transform.TweenLocalRotationX(destLocalXRot, animDuration)
             // this.transform.TweenLocalRotation(destRot, animDuration)
                 .SetEase(ease);
+
+            if(_globalManager.noOfPlanes == 0)
+                pelletTransform.gameObject.SetActive(false);
         }
 
         // --------------------------------------------
@@ -382,7 +322,6 @@ namespace ARSlingshot
         private void PerformShot()
         {
             _isShooting = true;
-            
             AnimateShot();
 
             this.UpdateSlingshotShake(0);
@@ -419,25 +358,20 @@ namespace ARSlingshot
                 .SetEaseLinear()
                 .SetOnComplete(() =>
                 {
-
-                    //this.pelletTransform.localPosition = new Vector3(0, 0, 0);
-                    // SHOOT THE WORLD PELLET
-                    this.pelletShot.gameObject.SetActive(true);
-                    this.pelletShot.removeAllForces();
-                    this.pelletShot.transform.position = this.pelletTransform.position;
-                    //this.pelletShot.transform.localPosition = this.pelletTransform.localPosition;
-                    this.pelletShot.transform.rotation = this.pelletTransform.rotation;
-                    this.pelletTransform.gameObject.SetActive(false);
-
-                    //Debug.LogError("[Slingshot][AnimateShot]origTransform" + pelletTransform.position);
-                    //Debug.LogError("[Slingshot][AnimateShot]origTransformLocal" + pelletTransform.localPosition);
-                    //Debug.LogError("[Slingshot][AnimateShot]spawnedTransform" + pelletShot.transform.position);
-                    //Debug.LogError("[Slingshot][AnimateShot]spawnedTransformLocal" + pelletShot.transform.localPosition);
-
-                    this.pelletShot.ShootWithSpeedAtCurrentRotation(shotSpeed * 0.4f);
-
+                    if (_globalManager.noOfPlanes != 0)
+                    {
+                        UpdatePelletCount();
+                        //this.pelletTransform.localPosition = new Vector3(0, 0, 0);
+                        // SHOOT THE WORLD PELLET
+                        this.pelletShot.gameObject.SetActive(true);
+                        this.pelletShot.removeAllForces();
+                        this.pelletShot.transform.position = this.pelletTransform.position;
+                        this.pelletShot.transform.rotation = this.pelletTransform.rotation;
+                        this.pelletTransform.gameObject.SetActive(false);
+                        this.pelletShot.ShootWithSpeedAtCurrentRotation(shotSpeed * 0.4f);
+                    }
                     AnimateSlingToRest(shotSpeed);
-                    //pelletShot = CreatePelletShot(pelletTransform);
+
                 });
         }
 
@@ -482,8 +416,8 @@ namespace ARSlingshot
 
             this._pullbackPercent = 0;
             this.UpdatePullbackVisuals();
-            this.pelletTransform.gameObject.SetActive(true);
-            //Debug.LogError("[Slingshot][SlingToRestAnimationComplete]");
+            if(_globalManager.noOfPlanes != 0)
+                this.pelletTransform.gameObject.SetActive(true);
             _isShooting = false;
         }
 
@@ -505,6 +439,12 @@ namespace ARSlingshot
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+        private void UpdatePelletCount()
+        {
+            _globalManager.noOfPellets -= 1;
+            _globalManager.noOfPelletsUI.text = "Ammo : " + _globalManager.noOfPellets;
+        }
 
         // Update is called once per frame
         void Update()

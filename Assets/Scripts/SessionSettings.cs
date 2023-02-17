@@ -38,7 +38,7 @@ namespace ARSlingshot
 
         private void ApplyChanges()
         {
-            var placementObj = GameObject.FindObjectOfType<PlaceOnPlane>(true);
+            var placementObj = GameObject.FindObjectOfType<PickUpResources>(true);
             if (placementObj != null)
             {
                 placementObj.enabled = this.enableXRPlacement;

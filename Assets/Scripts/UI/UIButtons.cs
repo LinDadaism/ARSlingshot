@@ -3,8 +3,6 @@
     using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
-    using UnityEngine.XR.Interaction.Toolkit.AR;
-    //using static TreeEditor.TreeGroup;
 
     /// <summary>
     /// Implements UI button functionality. See <see cref="UnityEngine.XR.ARFoundation.Samples.BackButton"/> for the back button implementation.
@@ -17,44 +15,36 @@
         [SerializeField]
         private GameObject togglePlacementButton;
 
-        [SerializeField]
-        private GameObject toggleManipulateButton;
+        //[SerializeField]
+        //private GameObject toggleManipulateButton;
 
         public SlingshotTouchResponder slingshotTouchResponder;
         public TextMeshProUGUI debugTextUI;
 
         private bool isPlacing;
-        private bool isManipulating;
+        //private bool isManipulating;
 
 
         /// <summary>
         /// Gets a value indicating whether the user is currently idle, i.e., no special UI mode is active.
         /// </summary>
-        public bool IsIdle => !this.isPlacing && !this.isManipulating;
-
-
-        private void Start()
-        {
-            slingshotTouchResponder.gameObject.SetActive(!this.isPlacing && !this.isManipulating);
-            Debug.Log("Slingshot SET" + slingshotTouchResponder.gameObject.activeSelf);
-            debugTextUI.text = "Slingshot SET" + slingshotTouchResponder.gameObject.activeSelf;
-        }
+        public bool IsIdle => !this.isPlacing;  // && !this.isManipulating;
 
         public void TogglePlacementButtonPressed()
         {
-            slingshotTouchResponder.gameObject.SetActive(!this.isPlacing && !this.isManipulating);
+            //slingshotTouchResponder.gameObject.SetActive(!this.isPlacing); // && !this.isManipulating);
             Debug.Log("Slingshot RESET" + slingshotTouchResponder.gameObject.activeSelf);
             debugTextUI.text = "Slingshot RESET" + slingshotTouchResponder.gameObject.activeSelf;
-            this.SetManipulateState(false);
+            //this.SetManipulateState(false);
             this.SetPlacementState(!this.isPlacing);
         }
 
-        public void ToggleManipulateButtonPressed()
-        {
-            slingshotTouchResponder.gameObject.SetActive(!this.isPlacing && !this.isManipulating);
-            this.SetPlacementState(false);
-            this.SetManipulateState(!this.isManipulating);
-        }
+        //public void ToggleManipulateButtonPressed()
+        //{
+        //    //slingshotTouchResponder.gameObject.SetActive(!this.isPlacing); // && !this.isManipulating);
+        //    this.SetPlacementState(false);
+        //    //this.SetManipulateState(!this.isManipulating);
+        //}
 
         /// <summary>
         /// Checks whether <paramref name="point"/> is over any UI element.
@@ -81,7 +71,7 @@
         private void SetPlacementState(bool state)
         {
             this.isPlacing = state;
-            var placeOnPlane = FindObjectOfType<PlaceOnPlane>();
+            var placeOnPlane = FindObjectOfType<PickUpResources>();
             if (placeOnPlane != null)
             {
                 placeOnPlane.CanPlace = this.isPlacing;
@@ -89,23 +79,23 @@
             }
         }
 
-        private void SetManipulateState(bool state)
-        {
-            this.isManipulating = state;
-            var placeOnPlane = FindObjectOfType<PlaceOnPlane>();
-            if (placeOnPlane != null)
-            {
-                var spawnedObect = placeOnPlane.SpawnedObject;
-                if (spawnedObect != null)
-                {
-                    if (spawnedObect.TryGetComponent<ARSelectionInteractable>(out var arInteractable))
-                    {
-                        arInteractable.enabled = this.isManipulating;
-                        this.SetButtonState(this.toggleManipulateButton, this.isManipulating);
-                    }
-                }
-            }
-        }
+        //private void SetManipulateState(bool state)
+        //{
+        //    this.isManipulating = state;
+        //    var placeOnPlane = FindObjectOfType<PickUpResources>();
+        //    if (placeOnPlane != null)
+        //    {
+        //        var spawnedObect = placeOnPlane.AirplanePrefab;
+        //        if (spawnedObect != null)
+        //        {
+        //            if (spawnedObect.TryGetComponent<ARSelectionInteractable>(out var arInteractable))
+        //            {
+        //                arInteractable.enabled = this.isManipulating;
+        //                this.SetButtonState(this.toggleManipulateButton, this.isManipulating);
+        //            }
+        //        }
+        //    }
+        //}
 
         private void SetButtonState(GameObject button, bool state)
         {

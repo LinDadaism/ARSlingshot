@@ -1,48 +1,53 @@
 namespace ARSlingshot
 {
+    using Photon.Pun;
     using System.Collections;
     using System.Collections.Generic;
+    using TMPro;
     using UnityEngine;
 
+    [System.Serializable]
     public class GlobalManager : MonoBehaviour
     {
-        //public GameObject[] objsToSpawn = new GameObject[5];
-        public GameObject ammunitionToSpawn;
-        public float timer;
-        //public float spawnPeriod; // how frequently obj is spawned e.g. every 5 seconds
-        //public int numberSpawnedEachPeriod;
+        public GameObject ammunitionToSpawnPrefab;
         public Vector3 originInScreenCoords;
-        // public int level; // prototype always default to 1
-        public int score;
-        //public int waterLevel;
-        //public string logSelected;
-        public float horizonMin, horizonMax, verticalMin, verticalMax;
-        public int gameState; // 0-ongoing, 1-win, 2-loss
+
+        public int noOfPlanes;
+        public TextMeshProUGUI noOfPlanesUI;
+
+        public int noOfPellets;
+        public TextMeshProUGUI noOfPelletsUI;
+
+        public int hoopScore;
+        public TextMeshProUGUI hoopScoreUI;
+
+        public int gameState;
 
         // Use this for initialization
         void Start()
         {
-            //Time.timeScale = 1;
+            noOfPlanes = 5;
+            noOfPellets = 10;
+            hoopScore = 0;
 
-            score = 0;
-            //waterLevel = 100;
-            timer = 0;
+            this.noOfPlanesUI.text = "Planes: " + this.noOfPlanes;
+            this.noOfPelletsUI.text = "Ammo: " + this.noOfPellets;
+            this.hoopScoreUI.text = "Hoops: " + this.hoopScore;
+            //originInScreenCoords = Camera.main.WorldToScreenPoint(new Vector3(0, 0, 0));
+            //horizonMin = 600.0f;
+            //horizonMax = 1200.0f;
+            //verticalMin = 50.0f;
+            //verticalMax = 1000.0f;
+        }
 
-            //spawnPeriod = 10.0f;
-            //numberSpawnedEachPeriod = 1;
-            //bucketSpawnPeriod = 20.0f;
-            //numBucketSpawnedEachPeriod = 2;
-
-            originInScreenCoords = Camera.main.WorldToScreenPoint(new Vector3(0, 0, 0));
-            horizonMin = 600.0f;
-            horizonMax = 1200.0f;
-            verticalMin = 50.0f;
-            verticalMax = 1000.0f;
+        private Vector3 randomPosGenerator()
+        {
+            return new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
         }
 
         void Update()
         {
-            timer += Time.deltaTime;
+            //timer += Time.deltaTime;
             //// spawn animals
             //if (timer > spawnPeriod)
             //{
@@ -60,6 +65,16 @@ namespace ARSlingshot
             //            Quaternion.AngleAxis(yRotation, Vector3.up));
             //    }
             //}
+
+            if(noOfPellets == 0)
+            {
+                if (this.ammunitionToSpawnPrefab == null || !FindObjectOfType<SharedSpaceManager>().HasFoundOrigin)
+                    return;
+
+                Vector3 ammoPos = randomPosGenerator();
+                PhotonNetwork.Instantiate(this.ammunitionToSpawnPrefab.name, ammoPos, Quaternion.identity);
+            }
+
         }
     }
 }

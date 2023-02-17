@@ -14,6 +14,11 @@ namespace ARSlingshot
         public TouchEvent touchMoved;
         public TouchEvent touchEnded;
 
+        private void Start()
+        {
+            this.enabled = (PlayerPrefs.GetInt("PlayerType") == 1) ? true : false;
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
             // Debug.Log("Mouse Down: " + eventData.pointerCurrentRaycast.gameObject.name);
