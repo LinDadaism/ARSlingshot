@@ -58,7 +58,7 @@ namespace ARSlingshot
         private void Awake()
         {
             //// DEBUG: COMMENT OUT TO TEST ON PC
-            //// Image tracking needs a mobile device to work.
+            // Image tracking needs a mobile device to work.
             if (!Application.isMobilePlatform)
             {
                 this.enabled = false;

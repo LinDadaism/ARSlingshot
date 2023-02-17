@@ -358,7 +358,7 @@ namespace ARSlingshot
                 .SetEaseLinear()
                 .SetOnComplete(() =>
                 {
-                    if (_globalManager.noOfPlanes != 0)
+                    if (_globalManager.noOfPellets != 0)
                     {
                         UpdatePelletCount();
                         //this.pelletTransform.localPosition = new Vector3(0, 0, 0);

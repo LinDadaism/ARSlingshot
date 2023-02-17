@@ -23,6 +23,7 @@ namespace ARSlingshot
         private bool pressed;
 
         private GlobalManager _globalManager;
+        private UIButtons _uiButtons;
         /// <summary>
         /// Gets or sets a value indicating whether the user is allowed to place an object.
         /// </summary>
@@ -33,6 +34,7 @@ namespace ARSlingshot
             base.Awake();
             this.m_RaycastManager = this.GetComponent<ARRaycastManager>();
             _globalManager = GameObject.Find("GlobalManager").GetComponent<GlobalManager>();
+            _uiButtons = GameObject.Find("UIManager").GetComponent<UIButtons>();
         }
 
         private void Update()
@@ -43,8 +45,8 @@ namespace ARSlingshot
             var touchPosition = Pointer.current.position.ReadValue();
 
             // Ensure we are not over any UI element.
-            var uiButtons = FindObjectOfType<UIButtons>();
-            if (uiButtons != null && (uiButtons.IsPointOverUI(touchPosition)))
+            _uiButtons = FindObjectOfType<UIButtons>();
+            if (_uiButtons != null && (_uiButtons.IsPointOverUI(touchPosition)))
                 return;
 
             // Raycast against layer "GroundPlane" using normal Raycasting for our artifical ground plane.
@@ -81,8 +83,11 @@ namespace ARSlingshot
         private void pickUpAmmo(GameObject hitObject)
         {
             // update score
+            _uiButtons.debugTextUI.text = "Updating score";
             _globalManager.noOfPellets+=10;
             _globalManager.noOfPelletsUI.text = "Ammo: " + _globalManager.noOfPellets;
+            _globalManager.isAmmoSpawned = false;
+            Destroy(_globalManager.spawnedAmmoGameObject);
             // Destroy gameObject from the scene and mark it for garbage collection
             Destroy(hitObject);
         }

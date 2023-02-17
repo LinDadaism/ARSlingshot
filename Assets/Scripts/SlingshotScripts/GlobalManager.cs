@@ -30,6 +30,9 @@ namespace ARSlingshot
         //public int numberSpawnedEachPeriod = 3;
         //private float timer = 0.0f;
 
+        public GameObject spawnedAmmoGameObject;
+        public bool isAmmoSpawned;
+
         // Use this for initialization
         void Start()
         {
@@ -46,11 +49,13 @@ namespace ARSlingshot
             //horizonMax = 1200.0f;
             //verticalMin = 50.0f;
             //verticalMax = 1000.0f;
+
+            isAmmoSpawned = false;
         }
 
         private Vector3 randomPosGenerator()
         {
-            return new Vector3(Random.Range(-2, 2), 0.5f, Random.Range(-2, 2));
+            return new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
         }
 
         void Update()
@@ -75,14 +80,12 @@ namespace ARSlingshot
 
             if (noOfPellets == 0)
             {
-                if (this.ammunitionToSpawnPrefab == null || !FindObjectOfType<SharedSpaceManager>().HasFoundOrigin)
-                {
-                    Debug.Log("cannot spawn ammo");
+                if (this.isAmmoSpawned || this.ammunitionToSpawnPrefab == null || !FindObjectOfType<SharedSpaceManager>().HasFoundOrigin)
                     return;
-                }
-
                 Vector3 ammoPos = randomPosGenerator();
-                PhotonNetwork.Instantiate(this.ammunitionToSpawnPrefab.name, ammoPos, Quaternion.identity);
+                //Vector3 ammoPos = new Vector3(0, 0.7f, 0);
+                spawnedAmmoGameObject = PhotonNetwork.Instantiate(this.ammunitionToSpawnPrefab.name, ammoPos, Quaternion.identity);
+                isAmmoSpawned = true;
             }
 
         }

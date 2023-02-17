@@ -32,9 +32,6 @@
 
         public void TogglePlacementButtonPressed()
         {
-            //slingshotTouchResponder.gameObject.SetActive(!this.isPlacing); // && !this.isManipulating);
-            Debug.Log("Slingshot RESET" + slingshotTouchResponder.gameObject.activeSelf);
-            debugTextUI.text = "Slingshot RESET" + slingshotTouchResponder.gameObject.activeSelf;
             //this.SetManipulateState(false);
             this.SetPlacementState(!this.isPlacing);
         }
@@ -100,6 +97,7 @@
         private void SetButtonState(GameObject button, bool state)
         {
             button.GetComponent<Image>().color = state ? Color.green : Color.white;
+            //slingshotTouchResponder.gameObject.SetActive(!state);
         }
     }
 }
