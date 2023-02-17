@@ -49,10 +49,10 @@ namespace ARSlingshot
             }
             else
             {
-                GameObject.Destroy(this.gameObject);
+                Destroy(this.gameObject);
             }
 
-            GameObject.DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(this.gameObject);
         }
 
         private void Start()
