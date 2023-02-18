@@ -59,7 +59,12 @@
                 var results = new System.Collections.Generic.List<UnityEngine.EventSystems.RaycastResult>();
                 graphicRaycaster.Raycast(pointerEventData, results);
                 if (results.Count > 0)
+                {
+                    Debug.LogError(results[0].gameObject.name);
+                    if (results[0].gameObject.name.Equals("SlingshotTouchResponder"))
+                        return false;
                     return true;
+                }
             }
 
             return false;

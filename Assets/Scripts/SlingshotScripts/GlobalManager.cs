@@ -21,6 +21,9 @@ namespace ARSlingshot
         public int hoopScore;
         public TextMeshProUGUI hoopScoreUI;
 
+        public int planesShot;
+        public TextMeshProUGUI planesShotUI;
+
         public int gameState;
         public int hoopScoreIncrement;
 
@@ -44,6 +47,7 @@ namespace ARSlingshot
             this.noOfPlanesUI.text = "Planes: " + this.noOfPlanes;
             this.noOfPelletsUI.text = "Ammo: " + this.noOfPellets;
             this.hoopScoreUI.text = "Hoops: " + this.hoopScore;
+            this.planesShotUI.text = "Planes Shot: " + this.planesShot;
             //originInScreenCoords = Camera.main.WorldToScreenPoint(new Vector3(0, 0, 0));
             //horizonMin = 600.0f;
             //horizonMax = 1200.0f;

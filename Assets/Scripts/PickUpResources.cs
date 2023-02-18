@@ -49,21 +49,25 @@ namespace ARSlingshot
             if (_uiButtons != null && (_uiButtons.IsPointOverUI(touchPosition)))
                 return;
 
+
             // Raycast against layer "GroundPlane" using normal Raycasting for our artifical ground plane.
             // For AR Foundation planes (if enabled), we use AR Raycasting.
             var ray = Camera.main.ScreenPointToRay(touchPosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Airplane")))
+            int playerType = PlayerPrefs.GetInt("PlayerType");
+            GameObject hitObject;
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Airplane")) && playerType == 0)
             {
-                //Debug.Log("using Physics raycast");
-
-                GameObject hitObject = hit.transform.gameObject;
-
-                int playerType = PlayerPrefs.GetInt("PlayerType");
-                if (hitObject.GetComponent<Collider>().CompareTag("Airplane") && playerType == 0)
+                hitObject = hit.transform.gameObject;
+                if (hitObject.GetComponent<Collider>().CompareTag("Airplane"))
                 {
                     pickUpPlane(hitObject);
                 }
-                else if (hitObject.GetComponent<Collider>().CompareTag("Ammo") && playerType == 1)
+            }
+            else if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Ammo")) && playerType == 1)
+            {
+                hitObject = hit.transform.gameObject;
+                if (hitObject.GetComponent<Collider>().CompareTag("Ammo"))
                 {
                     pickUpAmmo(hitObject);
                 }
