@@ -59,10 +59,10 @@ namespace ARSlingshot
         {
             //// DEBUG: COMMENT OUT TO TEST ON PC
             // Image tracking needs a mobile device to work.
-            if (!Application.isMobilePlatform)
-            {
-                this.enabled = false;
-            }
+            //if (!Application.isMobilePlatform)
+            //{
+            //    this.enabled = false;
+            //}
         }
 
         private void Start()
@@ -209,12 +209,12 @@ namespace ARSlingshot
             // Update our camera position every frame.
 
             //// DEBUG: UNCOMMENT TO TEST ON PC WITHOUT IMAGE TRACKING
-            //if (Input.GetKeyDown(KeyCode.K))
-            //{
-            //    hasFoundOrigin = true;
-            //    hasFoundImageTarget = true;
-            //    this.ScannedImage?.Invoke(this);
-            //}
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                hasFoundOrigin = true;
+                hasFoundImageTarget = true;
+                this.ScannedImage?.Invoke(this);
+            }
             if (this.arCamera != null)
             {
                 var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");

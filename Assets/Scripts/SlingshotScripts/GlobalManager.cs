@@ -5,6 +5,7 @@ namespace ARSlingshot
     using System.Collections.Generic;
     using TMPro;
     using UnityEngine;
+    using UnityEngine.SceneManagement;
 
     [System.Serializable]
     public class GlobalManager : MonoBehaviour
@@ -26,6 +27,8 @@ namespace ARSlingshot
 
         public int gameState;
         public int hoopScoreIncrement;
+        public int numPlaneWin; // the number of planes a pellet person needs to win
+        public int planeScoreWin; // the score a plane person needs to win
 
         // vars below for spawning pellet to test collision with airplane
         //public GameObject pelletToSpawn;
@@ -43,6 +46,8 @@ namespace ARSlingshot
             noOfPellets = 10;
             hoopScore = 0;
             hoopScoreIncrement = 10;
+            planeScoreWin = 200;
+            numPlaneWin = 5;
 
             this.noOfPlanesUI.text = "Planes: " + this.noOfPlanes;
             this.noOfPelletsUI.text = "Ammo: " + this.noOfPellets;
@@ -92,6 +97,49 @@ namespace ARSlingshot
                 isAmmoSpawned = true;
             }
 
+            // constantly checking win/loss condition
+            // if score > default --> plane wins
+            // if planeShot > defualt --> pellet wins
+            if (hoopScore >= planeScoreWin)
+            {
+                PlayerPrefs.SetString("Winner", "Plane");
+                SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+                Debug.Log("plane wins! you suck pellet");
+            }
+            if (planesShot == numPlaneWin)
+            {
+                PlayerPrefs.SetString("Winner", "Pellet");
+                SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+                Debug.Log("pellet wins! you such plane");
+            }
+        }
+
+        [PunRPC]
+        public void UpdatePlaneCount(bool increase)
+        {
+            if (increase)
+            {
+                this.noOfPlanes++;
+            }
+            else
+            {
+                this.noOfPlanes--;
+            }
+            this.noOfPlanesUI.text = "Planes: " + this.noOfPlanes;
+        }
+
+        [PunRPC]
+        public void UpdateAmmoCount()
+        {
+            this.noOfPellets += 10;
+            this.noOfPelletsUI.text = "Ammo: " + this.noOfPellets;
+        }
+
+        [PunRPC]
+        public void UpdateShotCount()
+        {
+            this.planesShot++;
+            this.planesShotUI.text = "Ammo: " + this.planesShot;
         }
     }
 }

@@ -78,22 +78,30 @@ namespace ARSlingshot
         private void pickUpPlane(GameObject hitObject)
         {
             // update score
+            if (_globalManager.noOfPlanes >= 5 || hitObject.transform.GetChild(0).gameObject.activeSelf)
+                return;
+            
             _globalManager.noOfPlanes++;
             _globalManager.noOfPlanesUI.text = "Planes: " + _globalManager.noOfPlanes;
+            GameObject.Find("GlobalManager").GetPhotonView().RPC("UpdatePlaneCount", RpcTarget.OthersBuffered, true);
+
             // Destroy gameObject from the scene and mark it for garbage collection
-            Destroy(hitObject);
+            PhotonNetwork.Destroy(hitObject);
+            
         }
 
-        private void pickUpAmmo(GameObject hitObject)
+            private void pickUpAmmo(GameObject hitObject)
         {
             // update score
             _uiButtons.debugTextUI.text = "Updating score";
             _globalManager.noOfPellets+=10;
             _globalManager.noOfPelletsUI.text = "Ammo: " + _globalManager.noOfPellets;
+            GameObject.Find("GlobalManager").GetPhotonView().RPC("UpdateAmmoCount", RpcTarget.OthersBuffered);
+
             _globalManager.isAmmoSpawned = false;
-            Destroy(_globalManager.spawnedAmmoGameObject);
+            PhotonNetwork.Destroy(_globalManager.spawnedAmmoGameObject);
             // Destroy gameObject from the scene and mark it for garbage collection
-            Destroy(hitObject);
+            PhotonNetwork.Destroy(hitObject);
         }
 
         protected override void OnPress(Vector3 position) => this.pressed = true;

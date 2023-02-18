@@ -44,7 +44,6 @@ namespace ARSlingshot
             GlobalManager _globalManager = GameObject.Find("GlobalManager").GetComponent<GlobalManager>();
             _globalManager.hoopScore += _globalManager.hoopScoreIncrement;
             _globalManager.hoopScoreUI.text = "Hoop Score : " + _globalManager.hoopScore;
-            Debug.Log("all player score updated");
         }
     }
 }

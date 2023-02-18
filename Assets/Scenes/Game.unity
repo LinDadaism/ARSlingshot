@@ -1340,7 +1340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &611334852
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2116,6 +2116,8 @@ GameObject:
   m_Component:
   - component: {fileID: 980076783}
   - component: {fileID: 980076784}
+  - component: {fileID: 980076785}
+  - component: {fileID: 980076786}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -2163,8 +2165,49 @@ MonoBehaviour:
   planesShotUI: {fileID: 1091926205}
   gameState: 0
   hoopScoreIncrement: 0
+  numPlaneWin: 0
+  planeScoreWin: 0
   spawnedAmmoGameObject: {fileID: 0}
   isAmmoSpawned: 0
+--- !u!114 &980076785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980076782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 980076786}
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &980076786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980076782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 0
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &993661983
 GameObject:
   m_ObjectHideFlags: 0

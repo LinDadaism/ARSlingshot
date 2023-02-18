@@ -61,6 +61,7 @@
             // ownership here to the server.
             var rigidbody = projectile.GetComponent<Rigidbody>();
             rigidbody.isKinematic = false;
+            initialSpeed = 8;
             rigidbody.velocity = ray.direction * initialSpeed;
         }
 
