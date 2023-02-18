@@ -1,7 +1,7 @@
 # AiRPlane
 
 ### Win/lose condition:
-Plane player has to get 5 planes through the hoop within a limited amount of time. Otherwise the pellet shooting player wins the game. 
+Plane player wins the game by getting 20 plane flies through the hoop with only 5 planes that can be picked up only if they are not destroyed by a pellet. The shooter player wins the game by hitting 5 planes using an initial load of 10 pellets, which can also be refilled. 
 ### 2 goals
   - Main: Plane flying player shoots paper planes into the hoop
   - Secondary: Pellet player blocks the opponent by shooting down their planes
