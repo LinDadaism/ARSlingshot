@@ -36,7 +36,7 @@
         protected override void OnPressBegan(Vector3 position)
         {
             //if (this.projectilePrefab == null || !NetworkLauncher.Singleton.HasJoinedRoom)
-            if (this.projectilePrefab == null || !FindObjectOfType<SharedSpaceManager>().HasFoundOrigin || _globalManager.noOfPlanes == 0)
+            if (this.projectilePrefab == null || !FindObjectOfType<SharedSpaceManager>().HasFoundOrigin || _globalManager.noOfPlanes < 1)
                 return;
 
             // Ensure user is not doing anything else.
@@ -69,6 +69,7 @@
         {
             _globalManager.noOfPlanes -= 1;
             _globalManager.noOfPlanesUI.text = "Planes : " + _globalManager.noOfPlanes;
+            GameObject.Find("GlobalManager").GetPhotonView().RPC("UpdatePlaneCount", RpcTarget.OthersBuffered, false);
         }
     }
 }

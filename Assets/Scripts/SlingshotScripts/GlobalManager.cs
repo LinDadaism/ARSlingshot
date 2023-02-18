@@ -27,8 +27,8 @@ namespace ARSlingshot
 
         public int gameState;
         public int hoopScoreIncrement;
-        public int numPlaneWin; // the number of planes a pellet person needs to win
-        public int planeScoreWin; // the score a plane person needs to win
+        private int numPlaneWin; // the number of planes a pellet person needs to win
+        private int planeScoreWin; // the score a plane person needs to win
 
         // vars below for spawning pellet to test collision with airplane
         //public GameObject pelletToSpawn;
@@ -106,11 +106,11 @@ namespace ARSlingshot
                 SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
                 Debug.Log("plane wins! you suck pellet");
             }
-            if (planesShot == numPlaneWin)
+            if (planesShot >= numPlaneWin)
             {
-                PlayerPrefs.SetString("Winner", "Pellet");
+                PlayerPrefs.SetString("Winner", "Shooter");
                 SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
-                Debug.Log("pellet wins! you such plane");
+                Debug.Log("pellet shooter wins! you suck plane");
             }
         }
 
@@ -139,7 +139,7 @@ namespace ARSlingshot
         public void UpdateShotCount()
         {
             this.planesShot++;
-            this.planesShotUI.text = "Ammo: " + this.planesShot;
+            this.planesShotUI.text = "Planes Shot: " + this.planesShot;
         }
     }
 }

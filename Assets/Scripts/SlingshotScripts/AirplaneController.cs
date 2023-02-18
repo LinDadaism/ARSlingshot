@@ -18,9 +18,9 @@ namespace ARSlingshot
             {
                 // update score
                 GlobalManager _globalManager = GameObject.Find("GlobalManager").GetComponent<GlobalManager>();
-                _globalManager.noOfPlanes--;
-                _globalManager.noOfPlanesUI.text = "Planes: " + _globalManager.noOfPlanes;
-                GameObject.Find("GlobalManager").GetPhotonView().RPC("UpdatePlaneCount", RpcTarget.OthersBuffered, false);
+                //_globalManager.noOfPlanes--;
+                //_globalManager.noOfPlanesUI.text = "Planes: " + _globalManager.noOfPlanes;
+                //GameObject.Find("GlobalManager").GetPhotonView().RPC("UpdatePlaneCount", RpcTarget.OthersBuffered, false);
 
                 _globalManager.planesShot++;
                 _globalManager.planesShotUI.text = "Planes Shot: " + _globalManager.planesShot;

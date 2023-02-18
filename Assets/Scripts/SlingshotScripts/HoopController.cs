@@ -26,7 +26,7 @@ namespace ARSlingshot
         }
 
         // use trigger as collider to allow airplane fly through the hoop
-        void OnTriggerEnter(Collider other)
+        void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Airplane"))
             {
