@@ -2,7 +2,8 @@
 
 Play Demo
 --------
-https://user-images.githubusercontent.com/46789205/230479102-52070023-f6d4-46e7-af81-0de1d13f2f32.mp4
+https://drive.google.com/file/d/11I-4QKY7rCSQm9ujKxON3esVoIMdymjD/view?usp=sharing
+
 
 Overview
 --------
