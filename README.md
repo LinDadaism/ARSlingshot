@@ -1,5 +1,11 @@
 # AiRPlane
 
+Play Demo
+--------
+https://user-images.githubusercontent.com/46789205/230479102-52070023-f6d4-46e7-af81-0de1d13f2f32.mp4
+
+Overview
+--------
 ### Win/lose condition:
 Plane player wins the game by getting 20 plane flies through the hoop with only 5 planes that can be picked up only if they are not shot by a pellet. The shooter player wins the game by hitting 5 planes using an initial load of 10 pellets, which can also be refilled. 
 ### 2 goals
