@@ -16,7 +16,7 @@ Plane player wins the game by getting 20 plane flies through the hoop with only 
 (presented in a limited quantity at the start of the game; both players need to collect them after shooting out all the resources)
   - Paper planes: Plane player can pick up fallen planes to shoot again.
   - Ammo Box: Whenever the pellet person runs out of pellets, ammunition/supply box randomly appears within a range around the image target that needs to be picked up for refill. 
-### More than 3 prebabs:
+### More than 3 prefabs:
   - Paper plane
   - Pellet
   - Slingshot
